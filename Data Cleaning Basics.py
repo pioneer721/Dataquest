@@ -17,6 +17,57 @@ weight_describe= laptops["weight_kg"].describe()
 # print(laptops.loc[laptops["weight"].str.contains('s'), "weight"]   )
 
 
+# ----------------------------------------------------------------------------------#
+
+
+### EXTRACTING MANUFATURER NAME AND CREATING A NEW COLUMN FOR IT ###
+"""
+The Series.str.split() method accepts an argument n, which controls the maximum number of splits allowed. 
+By using n=1, the method will make a single split on the first whitespace
+
+expand=True argument expands series of lists into a dataframe:
+"""
+
+laptops["gpu_manufacturer"] = (laptops["gpu"]
+                                    .str.split(n=1,expand=True)
+                                    .iloc[:,0]
+                               )
+
+laptops["cpu_manufacturer"]= ( laptops["cpu"]
+                              .str.split(n=1, expand=True)
+                              .iloc[:,0]
+                             )
+
+print(laptops.cpu.head(6))
+print()
+print(laptops.cpu_manufacturer.head(6))
+
+
+"""
+OUTPUT
+
+0          Intel Core i5 2.3GHz
+1          Intel Core i5 1.8GHz
+2    Intel Core i5 7200U 2.5GHz
+3          Intel Core i7 2.7GHz
+4          Intel Core i5 3.1GHz
+5       AMD A9-Series 9420 3GHz
+Name: cpu, dtype: object
+
+0    Intel
+1    Intel
+2    Intel
+3    Intel
+4    Intel
+5      AMD
+Name: cpu_manufacturer, dtype: object
+"""
+
+
+# ----------------------------------------------------------------------------------#
+
+
+
 
                                      
 
