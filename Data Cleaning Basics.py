@@ -18,17 +18,6 @@ weight_describe= laptops["weight_kg"].describe()
 
 
 
-
-### Clearning price_euros column ###
-       #a) replace decimal commans with decimal points
-       #b) convert to float              
-
-laptops["price_euros"] = (laptops["price_euros"]
-                          .str.replace("," , ".")
-                          .astype(float)
-                         )
-
-price_describe= laptops["price_euros"].describe()
                                      
 
 
