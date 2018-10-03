@@ -66,7 +66,49 @@ Name: cpu_manufacturer, dtype: object
 
 # ----------------------------------------------------------------------------------#
 
+"""
+### Cleaning "storage" column 
+EX: 
+76                 2TB HDD
+77    128GB SSD +  1TB HDD
+78                 1TB HDD
 
+Objective: make 4 columns, storage_1_capacity_gb, storage_1_type, storage_2_capacity_gb,storage_2_type
+"""
+
+#1. Figure out which types there are
+#print(laptops["storage"].unique())
+
+
+#2. Remove GB, TB
+laptops["storage"] = (laptops["storage"]
+                      .str.replace("GB", "")
+                      .str.replace("TB", "000")
+                     )
+#print(laptops["storage"].head(10))
+
+#3. Split "storage" column into two columns
+laptops[["storage_1","storage_2"]]= laptops["storage"].str.split("+", expand= True) 
+
+
+#4. clean both columns using for loop
+for s in laptops[["storage_1", "storage_2"]]:
+    # name for the new columns
+    s_capacity = s + "_capacity_gb"
+    s_type = s + "_type"
+    
+    #Creating new columns for capacity and type!
+    laptops[[s_capacity, s_type]] = laptops[s].str.split(n=1, expand= True) 
+    
+    #changing capacity into float (can't be int cuz of missing values)
+    laptops[s_capacity] = laptops[s_capacity].astype(float)         
+
+    #Removing extra white spaces
+    laptops[s_type]= laptops[s_type].str.strip() 
+    
+
+#5 Remove unneeded 
+laptops.drop(["storage", "storage_1", "storage_2"], axis=1, inplace=True)    
 
 
                                      
