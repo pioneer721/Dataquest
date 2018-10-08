@@ -1,4 +1,3 @@
-
 """
 ### Cleaning "storage" column: reading data and putting each into appropriate new column ###  
 EX: 
@@ -64,6 +63,47 @@ laptops_cleaned_dtypes = laptops_cleaned.dtypes
 
 # ----------------------------------------------------------------------------------#
                                      
+
+#### Are laptops made by Apple more expensive than those by other manufacturers? ###
+
+#Average price of apple 
+apple= laptops[laptops["manufacturer"] == "Apple"]
+apple_avg= apple["price_euros"].mean() 
+print("apple avg price: ", apple_avg)
+
+#Average price of other manufacturers
+others= laptops[laptops["manufacturer"] != "Apple"]
+others_avg= others["price_euros"].mean() 
+print("others avg price: ", others_avg)
+
+print("Laptops made by Apple are more expensive than those by others!")
+
+
+# ----------------------------------------------------------------------------------#
+
+
+#### Which laptop has the most storage space? ###
+ 
+#Making a simpler dataframe with just the columns i need
+laptops2= laptops[["model_name","storage_1_capacity_gb","storage_2_capacity_gb"]]
+
+#Converting the NaN values in storage_2_capacity_gb into zero so I can do calculations 
+null_storage2= laptops2[laptops2["storage_2_capacity_gb"].isnull()]
+null_storage2["storage_2_capacity_gb"] = 0        
+
+#Calculating total capacity of each laptop
+laptops2["total_capacity"] = laptops2["storage_1_capacity_gb"] + laptops2["storage_2_capacity_gb"]
+
+#Declaring the dataframe's total capacity part as "capacity"
+capacity= laptops2["total_capacity"]
+
+#Finding the elements that have the same capacity as the greatest capasity 
+highest_storage= laptops2[capacity ==  capacity.max()]
+
+print(highest_storage)
+
+
+# ----------------------------------------------------------------------------------#
 
 
 ### Cleaning "weight" column ###
