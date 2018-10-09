@@ -19,13 +19,15 @@ plt.show()
 
 ### Multiple plots
 import matplotlib.pyplot as plt
-fig = plt.figure()
 
-ax1 = fig.add_subplot(2,1,1)    #Upper plot
-ax2 = fig.add_subplot(2,1,2)    #Bottom plot
+fig = plt.figure(figsize=(12, 5)) #Without the figzie, the labels can be unreadable! 
+ax1 = fig.add_subplot(2,1,1)
+ax2 = fig.add_subplot(2,1,2)
 
-#plotting the subplots! 
-ax1.plot(unrate["DATE"][:12], unrate["VALUE"][:12])     # first 12 values 
-ax2.plot(unrate["DATE"][12:24], unrate["VALUE"][12:24]) # 12~24 values
+ax1.plot(unrate[0:12]['DATE'], unrate[0:12]['VALUE'])
+ax1.set_title('Monthly Unemployment Rate, 1948')
+
+ax2.plot(unrate[12:24]['DATE'], unrate[12:24]['VALUE'])
+ax2.set_title('Monthly Unemployment Rate, 1949')
 
 plt.show()
