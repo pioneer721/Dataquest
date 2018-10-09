@@ -1,6 +1,6 @@
 ##### BASICS ######
 
-###Single plot
+### Single plot 
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -17,6 +17,7 @@ plt.title("Monthly Unemployment Trends, 1948")
 
 plt.show()
 
+# - - - - - - - - - - - - - 
 ### Multiple plots
 import matplotlib.pyplot as plt
 
@@ -29,5 +30,29 @@ ax1.set_title('Monthly Unemployment Rate, 1948')
 
 ax2.plot(unrate[12:24]['DATE'], unrate[12:24]['VALUE'])
 ax2.set_title('Monthly Unemployment Rate, 1949')
+plt.show()
+
+# - - - - - - - - - - - - - 
+
+### Multiple lines in one plot
+
+#if theres only a few lines
+unrate['DATE'] = pd.to_datetime(unrate['DATE'])   #converting the DATE column into a Series of datetime values.
+unrate['MONTH'] = unrate['DATE'].dt.month         #Extracting month values from "DATE" column
+
+fig = plt.figure(figsize=(6,3))
+plt.plot(unrate[0:12]['MONTH'], unrate[0:12]['VALUE'], c='red')
+plt.plot(unrate[12:24]['MONTH'], unrate[12:24]['VALUE'], c='blue')
+
+#Smarter way (if there are a lot of lines) 
+fig = plt.figure(figsize=(10,6))
+colors = ['red', 'blue', 'green', 'orange', 'black']
+labels= [1948, 1949, 1950, 1951, 1952]
+
+for i in range(5):
+    start_index = i*12
+    end_index = (i+1)*12
+    subset = unrate[start_index:end_index]
+    plt.plot(subset['MONTH'], subset['VALUE'], c=colors[i], label= labels[i])
 
 plt.show()
