@@ -9,7 +9,7 @@ Objective: make 4 columns, storage_1_capacity_gb, storage_1_type, storage_2_capa
 """
 
 #1. Figure out which types there are
-#print(laptops["storage"].unique())
+print(laptops["storage"].unique())
 
 
 #2. Remove GB, TB
